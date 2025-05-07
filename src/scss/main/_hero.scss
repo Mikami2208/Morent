@@ -1,0 +1,97 @@
+.hero {
+}
+.hero__container {
+}
+.container {
+}
+.hero__wrapper {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 10px;
+    height: 360px;
+}
+.hero__card {
+    width: 100%;
+    max-width: 640px;
+    border-radius: 10px;
+    border: 1px solid #000;
+    color: #fff;
+}
+
+.hero__card-first{
+    background-color: $color-light;
+}
+
+.hero__card-second{   
+    background-image: url('/public/assets/hero/background-card2.svg'), url('/public/assets/hero/background-card2.svg');
+    background-color: $color-primary;
+    background-size: 75px 120px, 75px 120px;
+    background-position: 0 0, 50px 0;
+}
+
+.hero__card-content{
+    display: flex;
+    flex-direction: column;
+    row-gap: 17px;
+    align-items: flex-start;
+    max-width: 300px;
+    padding-left: 15px;
+    padding-top: 15px;
+}
+.hero__card-title {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 150%;
+}
+.hero__card-text {
+    line-height: 150%;
+}
+.hero__card-button {
+}
+.button {
+}
+.hero__card-button-light {
+    background-color: $color-light;
+}
+.hero__card-photo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+@media(max-width: 975px){
+    .hero__wrapper{
+        flex-direction: column;
+        row-gap: 10px;
+        align-items: center;
+    }
+}
+@media(max-width: 600px){
+    .hero__card-second{
+        display: none;
+    }
+   
+}
+
+@media(max-width: 450px){
+    .hero__card-title{
+        font-size: 16px;
+
+    }
+
+    .hero__card-text{
+        font-size: 12px;
+    }
+
+    .hero__card-photo{
+        & img{
+            width: 196px;
+            height: 56px;
+        }
+   
+    }
+
+    .hero__card{
+        border: none;
+    }
+}

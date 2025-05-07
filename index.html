@@ -1,13 +1,83 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Morent</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="src/ts/main.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Morent</title>
+</head>
+
+<body>
+  <div id="app">
+    <header class="header">
+      <div class="header__container container">
+        <div class="header__wrapper">
+          <div class="header__column header__column-first">
+            <h1 class="header__logo">
+              MORENT
+            </h1>
+            <input type="text" id="header-search" class="header__input" placeholder="Search something here">
+          </div>
+
+          <div class="header__column header__column-second">
+            <div class="header__icon">
+              <img src="/assets/header/icons/heart.svg" alt="" class="header__icon-image">
+            </div>
+            <div class="header__icon">
+              <img src="/assets/header/icons/notification.svg" alt="" class="header__icon-image">
+            </div>
+            <div class="header__icon">
+              <img src="/assets/header/icons/setting-2.svg" alt="" class="header__icon-image">
+            </div>
+            <img src="/assets/header/Image.png" alt="" class="header__photo">
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="hero">
+        <div class="hero__container container">
+          <div class="hero__wrapper">
+            <div class="hero__card hero__card-first">
+              <div class="hero__card-content">
+                <h2 class="hero__card-title">
+                  The Best Platform for Car Rental
+                </h2>
+                <p class="hero__card-text">
+                  Ease of doing a car rental safely and reliably. Of course at a low price.
+                </p>
+                <button class="hero__card-button button">
+                  Rental Car
+                </button>
+              </div>
+              <div class="hero__card-photo">
+                <img src="/assets/hero/car1.png" alt="">
+              </div>
+            </div>
+            <div class="hero__card hero__card-second">
+              <div class="hero__card-content">
+                <h2 class="hero__card-title">
+                  Easy way to rent a car at a low price
+                </h2>
+                <p class="hero__card-text">
+                  Providing cheap car rental services and safe and comfortable facilities.
+                </p>
+                <button class="hero__card-button hero__card-button-light button">
+                  Rental Car
+                </button>
+              </div>
+              <div class="hero__card-photo">
+                <img src="/assets/hero/car2.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="src/ts/main.ts"></script>
+</body>
+
 </html>

@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import './variables';
+@import './nullstyle';
+@import './header';
+@import './main/main.scss';
+
+.container{
+    max-width: 1292px;
+    padding: 0 10px;
+    margin: 0 auto;
+}
+
+body{
+    font-family: $primary-font;
+}
+
+button{
+    padding: 10px 15px;
+    border-radius: 4px;
+    background-color: $color-primary;
+    color: #fff;
+}
+
+p{
+    font-size: 16px;
+    letter-spacing: -0.02em;
+}
