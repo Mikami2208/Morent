@@ -1,13 +1,56 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Morent</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="src/ts/main.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Morent</title>
+</head>
+
+<body>
+  <div id="app">
+    <header class="header">
+      <div class="header__container container">
+        <h1 class="header__logo">MORENT</h1>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="buttons">
+        <div class="buttons__container container">
+          <h2 class="buttons__title">Кнопки для відкриття форм: </h2>
+          <div class="buttons__buttons">
+            <button class="general-button">Додати автомобіль</button>
+            <button class="general-button">Додати ТЗ</button>
+          </div>
+        </div>
+
+      </section>
+
+      <section class="cars">
+        <div class="cars__container container">
+          <h2 class="cars__title title">Автомобілі</h2>
+          <div class="cars__cars-list" id="carsList"></div>
+        </div>
+      </section>
+
+      <section class="tz">
+        <div class="tz__container container">
+          <h2 class="tz__title title">Транспортний засіб</h2>
+          <div class="tz__tz-list" id="tzList"></div>
+        </div>
+      </section>
+
+      <section class="rent">
+        <div class="rent__container container">
+          <h2 class="rent__title title">Прокат</h2>
+          <div class="rent__rent-list" id="rentList"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="src/ts/main.ts"></script>
+</body>
+
 </html>

@@ -1,0 +1,15 @@
+@import './nullstyle';
+@import './header';
+@import './buttons';
+
+
+.container{
+    max-width: 1250px;
+    margin: 0 auto;
+}
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+section{
+    padding-top: 90px;
+}
