@@ -57,7 +57,7 @@ export class Vehicle {
     public toJSON(): object {
         return {    
             id: this.id,
-            car: this.car,
+            car: this.car.getId,
             category: this.category,
             plateNumber: this.plateNumber,
             startDate: this.startDate,
