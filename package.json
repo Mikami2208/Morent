@@ -14,6 +14,8 @@
     "vite": "^6.3.5"
   },
   "dependencies": {
+    "choicejs": "^1.1.1",
+    "choices.js": "^11.1.0",
     "firebase": "^11.9.0"
   }
 }

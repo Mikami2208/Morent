@@ -1,6 +1,8 @@
+@use './dialogs/dialog.scss';
 @import './nullstyle';
 @import './header';
 @import './buttons';
+
 
 
 .container{
@@ -12,4 +14,8 @@ body{
 }
 section{
     padding-top: 90px;
+}
+
+body._locked{
+    overflow: hidden;
 }

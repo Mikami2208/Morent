@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Morent</title>
 </head>
@@ -21,9 +22,9 @@
         <div class="buttons__container container">
           <h2 class="buttons__title">Кнопки для відкриття форм: </h2>
           <div class="buttons__buttons">
-            <button class="general-button">Додати автомобіль</button>
-            <button class="general-button">Додати ТЗ</button>
-            <button class="general-button">Додати аренду</button>
+            <button class="general-button" id="addCarButton">Додати автомобіль</button>
+            <button class="general-button" id="addVehicleButton">Додати ТЗ</button>
+            <button class="general-button" id="addRentButton">Додати аренду</button>
           </div>
         </div>
 
@@ -51,6 +52,78 @@
       </section>
     </main>
   </div>
+
+  <dialog id="addCarDialog" class="dialog">
+    <div class="dialog__container">
+      <h2 class="dialog__title">Форма для додавання автомобіля</h2>
+      <form action="#" class="dialog__form">
+        <label for="inputField" class="dialog__label">Фірма-виробник:</label>
+        <input type="text" id="inputField" class="dialog__input" />
+        <label for="inputField" class="dialog__label">Модель:</label>
+        <input type="text" id="inputField" class="dialog__input" />
+        <label for="inputField" class="dialog__label">Ціна:</label>
+        <input type="number" id="inputField" class="dialog__input" />
+        <label for="inputField" class="dialog__label">Рік:</label>
+        <input type="number" id="inputField" class="dialog__input" />
+        <div class="dialog__buttons"> 
+          <button type="submit" class="dialog__submit-button">Відправити</button>
+          <button class="dialog__close-button close-button">Закрити</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog class="addVehicleDialog dialog" id="addVehicleDialog">
+    <div class="dialog__container">
+      <h2 class="dialog__title">Форма для додавання ТЗ</h2>
+      <form action="#" class="dialog__form">
+
+        <label for="inputField" class="dialog__label">Автомобіль</label>
+        <select name="car-select" id="carSelect">
+
+        </select>
+        <label for="inputField" class="dialog__label">Тип ТЗ:</label>
+        <select name="vechicle-type" id="vechicle-type">
+          <option value="family-car">Family car</option>
+          <option value="sport-car">Sport</option>
+          <option value="cabriolet">Cabriolet</option>
+          <option value="SUV">SUV</option>
+        </select>
+        <label for="inputField" class="dialog__label">Номерний знак:</label>
+        <input type="text" id="inputField" class="dialog__input" />
+        <label for="inputField" class="dialog__label">Дата початку прокату:</label>
+        <input type="date" id="inputField" class="dialog__input" />
+        <label for="inputField" class="dialog__label">Тривалість прокату:</label>
+        <input type="number" id="inputField" class="dialog__input" />
+        <label for="inputField" class="dialog__label">Ціна:</label>
+        <input type="number" id="inputField" class="dialog__input" />
+        <div class="dialog__buttons">
+          <button type="submit" class="dialog__submit-button">Відправити</button>
+          <button class="dialog__close-button close-button">Закрити</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog class="addRent dialog" id="addRentDialog">
+    <div class="dialog__container">
+      <h2 class="dialog__title">Форма для додавання прокату</h2>
+      <form action="#" class="dialog__form">
+        <label for="inputField" class="dialog__label">Назва фірми з прокату:</label>
+        <input type="text" class="dialog__input" />
+        <label for="inputField" class="dialog__label">Транспортний засіб:</label>
+        <select name="tz-select" id="tzSelect">
+
+        </select>
+        <div class="dialog__buttons">
+          <button type="submit" class="dialog__submit-button">Відправити</button>
+          <button class="dialog__close-button close-button">Закрити</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
   <script type="module" src="src/ts/main.ts"></script>
 </body>
 
