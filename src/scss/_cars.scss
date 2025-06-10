@@ -1,0 +1,32 @@
+
+.cars__container{
+
+}
+
+.title{
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+
+}
+
+.cars__info-block{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    background-color: rgb(240, 240, 240);
+}
+
+.cars__info-block:hover{
+    background-color: rgb(220, 220, 220);
+}
+
+.cars__buttons{
+    display: flex;
+    column-gap: 10px;
+    justify-content: flex-end;
+    align-items: flex-start;
+}

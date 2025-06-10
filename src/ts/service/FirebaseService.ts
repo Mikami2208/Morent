@@ -2,10 +2,11 @@ import type { CarDTO } from "../dto/CarDTO";
 import { Vehicle } from "../models/Vehicle";
 import { Car } from "../models/Car";
 import { db } from "./firebase";
-import { collection, addDoc, getDocs, doc, setDoc, getDoc, query, where, limit, writeBatch } from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, setDoc, getDoc, query, where, limit, writeBatch, deleteDoc } from "firebase/firestore";
 import { Rental } from "../models/Rental";
 import type { VehicleDTO } from "../dto/VehicleDTO";
 import type { RentalDTO } from "../dto/RentalDTO";
+import { createCarID } from "../utils/createCarID";
 
 
 export class FirebaseService{
@@ -41,10 +42,12 @@ export class FirebaseService{
         }
     }
 
-    public static async setCar(car: Car, id: string): Promise<void> {
+    public static async setCar(car: Car, oldId: string, newId: string): Promise<void> {
         try {
-            const carDocRef = doc(db, "cars", id);
-            await setDoc(carDocRef, car.toJSON());
+            await this.deleteCar(oldId)
+            car.setId = newId; // Оновлюємо ID автомобіля на новий
+            await this.addCar(car) // Оновлюємо ID на основі нових даних
+           
         } catch (error) {
             console.error("Помилка при оновленні авто:", error);
             throw new Error("Не вдалося оновити авто в базі даних");
@@ -116,6 +119,16 @@ export class FirebaseService{
         } catch (error) {
             console.error("Помилка при отриманні прокату:", error);
             throw new Error("Не вдалося отримати прокат з бази даних");
+        }
+    }
+
+    public static async deleteCar(carId: string): Promise<void> {
+        try {
+            const carDocRef = doc(db, "cars", carId);
+            await deleteDoc(carDocRef);
+        } catch (error) {
+            console.error("Помилка при видаленні авто:", error);
+            throw new Error("Не вдалося видалити авто з бази даних");
         }
     }
 }

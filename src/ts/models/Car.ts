@@ -44,6 +44,13 @@ export class Car {
     get getPrice(): number {
         return this.price;
     }
+
+    set setId(id: string) {
+        if (!id) {
+            throw new Error("ID не може бути пустим");
+        }
+        this.id = id;
+    }
     
     public toString():string{
         return `Марка: ${this.brand}; Модель: ${this.model}; Ціна: ${this.price}; Рік: ${this.year}`

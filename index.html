@@ -33,7 +33,10 @@
       <section class="cars">
         <div class="cars__container container">
           <h2 class="cars__title title">Автомобілі</h2>
-          <div class="cars__cars-list" id="carsList"></div>
+          <div class="cars__cars-list" id="carsList">
+
+             
+          </div>
         </div>
       </section>
 
@@ -56,22 +59,51 @@
   <dialog id="addCarDialog" class="dialog">
     <div class="dialog__container">
       <h2 class="dialog__title">Форма для додавання автомобіля</h2>
-      <form action="#" class="dialog__form">
-        <label for="inputField" class="dialog__label">Фірма-виробник:</label>
-        <input type="text" id="inputField" class="dialog__input" />
-        <label for="inputField" class="dialog__label">Модель:</label>
-        <input type="text" id="inputField" class="dialog__input" />
-        <label for="inputField" class="dialog__label">Ціна:</label>
-        <input type="number" id="inputField" class="dialog__input" />
-        <label for="inputField" class="dialog__label">Рік:</label>
-        <input type="number" id="inputField" class="dialog__input" />
-        <div class="dialog__buttons"> 
-          <button type="submit" class="dialog__submit-button">Відправити</button>
-          <button class="dialog__close-button close-button">Закрити</button>
+      <form action="#" class="dialog__form" id="addCarForm">
+        <label for="brand" class="dialog__label">Фірма-виробник:</label>
+        <input type="text" id="brand" name="brand" class="dialog__input" required />
+  
+        <label for="model" class="dialog__label">Модель:</label>
+        <input type="text" id="model" name="model" class="dialog__input" required />
+  
+        <label for="price" class="dialog__label">Ціна:</label>
+        <input type="number" id="price" name="price" class="dialog__input" required />
+  
+        <label for="year" class="dialog__label">Рік:</label>
+        <input type="number" id="year" name="year" class="dialog__input" required />
+  
+        <div class="dialog__buttons">
+          <button type="submit" class="dialog__submit-button" id="submitCar">Відправити</button>
+          <button type="button" class="dialog__close-button close-button">Закрити</button>
         </div>
       </form>
     </div>
   </dialog>
+
+  <dialog id="editCarDialog" class="dialog">
+    <div class="dialog__container">
+      <h2 class="dialog__title">Форма для редагування автомобіля</h2>
+      <form action="#" class="dialog__form" id="editCarForm">
+        <label for="brand" class="dialog__label">Фірма-виробник:</label>
+        <input type="text" id="editBrand" name="brand" class="dialog__input" required />
+  
+        <label for="model" class="dialog__label">Модель:</label>
+        <input type="text" id="editModel" name="model" class="dialog__input" required />
+  
+        <label for="price" class="dialog__label">Ціна:</label>
+        <input type="number" id="editPrice" name="price" class="dialog__input" required />
+  
+        <label for="year" class="dialog__label">Рік:</label>
+        <input type="number" id="editYear" name="year" class="dialog__input" required />
+  
+        <div class="dialog__buttons">
+          <button type="submit" class="dialog__submit-button" id="submitCar">Відправити</button>
+          <button type="button" class="dialog__close-button close-button">Закрити</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+  
 
   <dialog class="addVehicleDialog dialog" id="addVehicleDialog">
     <div class="dialog__container">
