@@ -43,7 +43,8 @@
       <section class="tz">
         <div class="tz__container container">
           <h2 class="tz__title title">Транспортний засіб</h2>
-          <div class="tz__tz-list" id="tzList"></div>
+          <div class="cars__cars-list " id="tzList"></div>
+          
         </div>
       </section>
 
@@ -97,7 +98,7 @@
         <input type="number" id="editYear" name="year" class="dialog__input" required />
   
         <div class="dialog__buttons">
-          <button type="submit" class="dialog__submit-button" id="submitCar">Відправити</button>
+          <button type="submit" class="dialog__submit-button" id="submitVehicle">Відправити</button>
           <button type="button" class="dialog__close-button close-button">Закрити</button>
         </div>
       </form>
@@ -108,30 +109,56 @@
   <dialog class="addVehicleDialog dialog" id="addVehicleDialog">
     <div class="dialog__container">
       <h2 class="dialog__title">Форма для додавання ТЗ</h2>
-      <form action="#" class="dialog__form">
+      <form action="#" class="dialog__form" id="addVehicleForm">
 
-        <label for="inputField" class="dialog__label">Автомобіль</label>
-        <select name="car-select" id="carSelect">
+        <label for="car-select" class="dialog__label">Автомобіль</label>
+        <select name="car" id="carSelect">
 
         </select>
-        <label for="inputField" class="dialog__label">Тип ТЗ:</label>
+        <label for="vechicle-type" class="dialog__label">Тип ТЗ:</label>
         <select name="vechicle-type" id="vechicle-type">
-          <option value="family-car">Family car</option>
-          <option value="sport-car">Sport</option>
-          <option value="cabriolet">Cabriolet</option>
-          <option value="SUV">SUV</option>
+        
         </select>
         <label for="inputField" class="dialog__label">Номерний знак:</label>
-        <input type="text" id="inputField" class="dialog__input" />
+        <input name="plate-number" type="text" id="plate-number" class="dialog__input" />
         <label for="inputField" class="dialog__label">Дата початку прокату:</label>
-        <input type="date" id="inputField" class="dialog__input" />
+        <input name="date-of-start-rental" type="date" id="date-of-start-rental" class="dialog__input" />
         <label for="inputField" class="dialog__label">Тривалість прокату:</label>
-        <input type="number" id="inputField" class="dialog__input" />
+        <input name="rental-duration" type="number" id="rental-duration" class="dialog__input" />
         <label for="inputField" class="dialog__label">Ціна:</label>
-        <input type="number" id="inputField" class="dialog__input" />
+        <input name="price-rental" type="number" id="price-rental" class="dialog__input" />
         <div class="dialog__buttons">
           <button type="submit" class="dialog__submit-button">Відправити</button>
-          <button class="dialog__close-button close-button">Закрити</button>
+          <button type="button" class="dialog__close-button close-button">Закрити</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog class="editVehicleDialog dialog" id="editVehicleDialog">
+    <div class="dialog__container">
+      <h2 class="dialog__title">Форма для додавання ТЗ</h2>
+      <form action="#" class="dialog__form" id="editVehicleForm">
+
+        <label for="car-select" class="dialog__label">Автомобіль</label>
+        <select name="car" id="carSelectEdit">
+
+        </select>
+        <label for="vechicle-type" class="dialog__label">Тип ТЗ:</label>
+        <select name="vechicle-type" id="vechicle-type-edit">
+        
+        </select>
+        <label for="inputField" class="dialog__label">Номерний знак:</label>
+        <input name="plate-number" type="text" id="editPlateNumber" class="dialog__input" />
+        <label for="inputField" class="dialog__label">Дата початку прокату:</label>
+        <input name="date-of-start-rental" type="date" id="editStartDate" class="dialog__input" />
+        <label for="inputField" class="dialog__label">Тривалість прокату:</label>
+        <input name="rental-duration" type="number" id="editRentalDuration" class="dialog__input" />
+        <label for="inputField" class="dialog__label">Ціна:</label>
+        <input name="price-rental" type="number" id="editPriceVehicle" class="dialog__input" />
+        <div class="dialog__buttons">
+          <button type="submit" class="dialog__submit-button">Відправити</button>
+          <button type="button" class="dialog__close-button close-button">Закрити</button>
         </div>
       </form>
     </div>

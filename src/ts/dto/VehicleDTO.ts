@@ -8,11 +8,13 @@ export class VehicleDTO{
     public plateNumber: string
     public startDate: Date
     public rentalDuration: number
-    constructor(car: Car, category: Category, plateNumber: string, startDate: Date, rentalDuration: number) {
+    public price: number
+    constructor(car: Car, category: Category, plateNumber: string, startDate: Date, rentalDuration: number, price: number) {
         this.car = car;
         this.category = category;
         this.plateNumber = plateNumber;
         this.startDate = startDate;
         this.rentalDuration = rentalDuration;
+        this.price = price;
     }
 }

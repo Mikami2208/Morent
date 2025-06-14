@@ -11,6 +11,7 @@ export class Vehicle {
     private plateNumber: string;
     private startDate: Date;
     private rentalDuration: number;
+    private price: number;
 
     constructor(dto: VehicleDTO) {
         if(dto.rentalDuration < 1){
@@ -22,13 +23,14 @@ export class Vehicle {
         this.plateNumber = dto.plateNumber;
         this.startDate = new Date(dto.startDate);
         this.rentalDuration = dto.rentalDuration;
+        this.price = dto.price;
     }
 
     get getId(): string {
         return this.id;
     }
-    get getCar(): string {
-        return this.car.getId;
+    get getCar(): Car {
+        return this.car;
     }
     get getCategory(): Category {
         return this.category;
@@ -42,10 +44,16 @@ export class Vehicle {
     get getRentalDuration(): number {
         return this.rentalDuration;
     }
-    public getPrice(): number {
-        return this.car.getPrice * this.rentalDuration;
+    get getPrice(): number {
+        return this.price;
     }
 
+    set setId(id: string) {
+        if (!id) {
+            throw new Error("ID не може бути пустим");
+        }
+        this.id = id;
+    }
     public toString(): string{
         return `Дані про авто: '${this.car.toString()};\n 
         Категорія: ${this.category};\n 
@@ -61,7 +69,8 @@ export class Vehicle {
             category: this.category,
             plateNumber: this.plateNumber,
             startDate: this.startDate,
-            rentalDuration: this.rentalDuration
+            rentalDuration: this.rentalDuration,
+            price: this.price
         };
         
     }
