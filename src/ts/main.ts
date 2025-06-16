@@ -9,6 +9,7 @@ import { addCarsToVehicleModalFromDB } from './utils/carUtils';
 import { initRentalCreation } from './service/rentalService';
 import { addVehiclesToRentalModalFromDB } from './utils/vehicleUtils';
 import { populateCategorySelect } from './utils/populateCategorySelect';
+import { addCloseConfirmation } from './utils/addCloseConfirmation';
 
 (async function initApp() {
     populateCategorySelect();
@@ -16,9 +17,17 @@ import { populateCategorySelect } from './utils/populateCategorySelect';
     initCarCreation();
     initVehicleCreation();
     initRentalCreation();
+    addCloseConfirmation('addCarDialog');
+    addCloseConfirmation('addVehicleDialog');
+    addCloseConfirmation('addRentDialog');
+    addCloseConfirmation('editCarDialog');
+    addCloseConfirmation('editVehicleDialog');
+    addCloseConfirmation('editRentDialog');
 
     await addCarsToVehicleModalFromDB();
     await addVehiclesToRentalModalFromDB();
+
+
 })();
 
 
@@ -34,6 +43,7 @@ document.getElementById('addVehicleButton')?.addEventListener('click', () => {
 document.getElementById('addRentButton')?.addEventListener('click', () => {
     openModal('addRentDialog');
 });
+
 
 
 

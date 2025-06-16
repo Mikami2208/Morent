@@ -12,6 +12,7 @@ import { validateVehicleForm } from "../validation/vehicleValidation";
 
 export function initVehicleCreation(): void {
   const addVehicleForm = document.getElementById("addVehicleForm") as HTMLFormElement;
+  const dialog: DialogManager = new DialogManager("addVehicleDialog");
   if (!addVehicleForm) {
     console.error("Форма не знайдена");
     return;
@@ -40,6 +41,7 @@ export function initVehicleCreation(): void {
     try {
       carDb = await FirebaseService.getCarById(selectedCarId) as Car;
       carDb.setId = selectedCarId;
+
       if (!carDb) {
         console.warn("Автомобіль не знайдено за ID:", selectedCarId);
         return;
@@ -59,6 +61,7 @@ export function initVehicleCreation(): void {
 
     try {
       await FirebaseService.addVehicle(newVehicle);
+      dialog.closeDialog();
       console.log("Транспортний засіб успішно додано:", newVehicle);
       renderVehicleBlock(newVehicle);
       addVehicleForm.reset();
