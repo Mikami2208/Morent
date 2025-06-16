@@ -19,11 +19,17 @@ export class ModelFactory {
 
             case "vehicles":
                 const vehicleCar: Car = await FirebaseService.getCarById(data.car) as Car;
+                const startDate = data.startDate?.toDate?.() ?? new Date(data.startDate);
+                if (isNaN(startDate.getTime())) {
+                    console.error("Некоректна дата startDate:", data.startDate);
+                    throw new Error("Некоректна дата початку оренди в об'єкті vehicle");
+                }
+
                 const vehicleDTO = new VehicleDTO(
                     vehicleCar,
                     data.category,
                     data.plateNumber,
-                    data.startDate,
+                    startDate,
                     data.rentalDuration,
                     data.price
                 );

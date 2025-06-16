@@ -100,6 +100,7 @@ export async function readVehicleFormData(form: HTMLFormElement): Promise<Vehicl
   }
 
   const car = await FirebaseService.getCarById(carId) as Car;
+  car.setId = carId; 
 
 if (!car) {
   console.warn("Автомобіль не знайдено за ID:", carId);

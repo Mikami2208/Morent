@@ -2,7 +2,7 @@
 
 export class DialogManager{
 
-    private dialog: HTMLDialogElement;
+    public dialog: HTMLDialogElement;
 
     constructor(dialogId: string) {
         const dialog = document.getElementById(dialogId);

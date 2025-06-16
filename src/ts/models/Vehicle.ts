@@ -14,14 +14,16 @@ export class Vehicle {
     private price: number;
 
     constructor(dto: VehicleDTO) {
-        if(dto.rentalDuration < 1){
-            throw new Error("Тривалість прокату не може бути меньше одного дня")
+        if (!(dto.car instanceof Car)) {
+            throw new Error("Авто не може бути пустим");
         }
         this.id = createVehicleID(dto.plateNumber, dto.startDate, dto.rentalDuration);
         this.car = dto.car;
         this.category = dto.category;
         this.plateNumber = dto.plateNumber;
-        this.startDate = new Date(dto.startDate);
+        this.startDate = dto.startDate instanceof Date
+            ? dto.startDate
+            : new Date((dto.startDate as any).seconds ? (dto.startDate as any).seconds * 1000 : dto.startDate);
         this.rentalDuration = dto.rentalDuration;
         this.price = dto.price;
     }
@@ -54,7 +56,7 @@ export class Vehicle {
         }
         this.id = id;
     }
-    public toString(): string{
+    public toString(): string {
         return `Дані про авто: '${this.car.toString()};\n 
         Категорія: ${this.category};\n 
         Номерний знак: ${this.plateNumber};\n 
@@ -63,7 +65,7 @@ export class Vehicle {
     }
 
     public toJSON(): object {
-        return {    
+        return {
             id: this.id,
             car: this.car.getId,
             category: this.category,
@@ -72,6 +74,6 @@ export class Vehicle {
             rentalDuration: this.rentalDuration,
             price: this.price
         };
-        
+
     }
 }

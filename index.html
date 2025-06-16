@@ -51,7 +51,7 @@
       <section class="rent">
         <div class="rent__container container">
           <h2 class="rent__title title">Прокат</h2>
-          <div class="rent__rent-list" id="rentList"></div>
+          <div class="rent__rent-list" id="rentalList"></div>
         </div>
       </section>
     </main>
@@ -169,9 +169,27 @@
       <h2 class="dialog__title">Форма для додавання прокату</h2>
       <form action="#" class="dialog__form">
         <label for="inputField" class="dialog__label">Назва фірми з прокату:</label>
-        <input type="text" class="dialog__input" />
+        <input type="text" class="dialog__input" name="companyName" />
         <label for="inputField" class="dialog__label">Транспортний засіб:</label>
         <select name="tz-select" id="tzSelect">
+
+        </select>
+        <div class="dialog__buttons">
+          <button type="submit" class="dialog__submit-button">Відправити</button>
+          <button type="button" class="dialog__close-button close-button">Закрити</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog class="editRent dialog" id="editRentDialog">
+    <div class="dialog__container">
+      <h2 class="dialog__title">Форма для додавання прокату</h2>
+      <form action="#" class="dialog__form">
+        <label for="inputField" class="dialog__label">Назва фірми з прокату:</label>
+        <input type="text" class="dialog__input" name="editCompanyName" id="editCompanyName" />
+        <label for="inputField" class="dialog__label">Транспортний засіб:</label>
+        <select name="tz-select" id="editTzSelect">
 
         </select>
         <div class="dialog__buttons">
@@ -181,6 +199,8 @@
       </form>
     </div>
   </dialog>
+
+  
 
   <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
   <script type="module" src="src/ts/main.ts"></script>

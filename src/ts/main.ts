@@ -5,7 +5,9 @@ import { DialogManager } from './managers/DialogManager'
 import { FirebaseService } from './service/FirebaseService';
 import { addCarToDatabase } from './utils/addCarToDatabase';
 import { addCarsToVehicleModalFromDB } from './utils/addCarsToVehicleModal';
+import { addRentalToDatabase } from './utils/addRentalToDB';
 import { addVehicleToDatabase } from './utils/addVehicleToDatabase';
+import { addVehiclesToRentalModalFromDB } from './utils/addVehiclesToRentalModalFromDB';
 import { populateCategorySelect } from './utils/populateCategorySelect';
 
 (async function initApp() {
@@ -13,8 +15,10 @@ import { populateCategorySelect } from './utils/populateCategorySelect';
     initChoices();  
     addCarToDatabase();
     addVehicleToDatabase();
+    addRentalToDatabase();
   
     await addCarsToVehicleModalFromDB();
+    await addVehiclesToRentalModalFromDB();
   })();
 
  

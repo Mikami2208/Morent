@@ -25,8 +25,12 @@ export class Rental{
     get getCompanyName(): string {
         return this.companyName;
     }
-    public getVechicle(): string[] {
+    public getVechicleId(): string[] {
         return this.vehicle.map(v => v.getId);
+    }
+
+    public getVehicle(): Vehicle[] {
+        return this.vehicle;
     }
 
     public toString(): string {
@@ -34,14 +38,21 @@ export class Rental{
     }
 
     public toShortString(): string {
-        return `Прокат: ${this.companyName},\n Авто: ${this.vehicle.map(v => v.getStartDate).join(", ")}\n Сумарная вартість: ${this.vehicle.reduce((total, v) => total + v.getPrice(), 0)}`;
+        return `Прокат: ${this.companyName},\n Авто: ${this.vehicle.map(v => v.getStartDate).join(", ")}\n Сумарная вартість: ${this.vehicle.reduce((total, v) => total + v.getPrice, 0)}`;
+    }
+
+    set setId(id: string) {
+        if (!id) {
+            throw new Error("ID не може бути пустим");
+        }
+        this.id = id;
     }
 
     public toJSON(): object {
         return {
             id: this.id,
             companyName: this.companyName,
-            vehicle: this.getVechicle()
+            vehicle: this.getVechicleId()
         };
     }
 

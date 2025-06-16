@@ -7,6 +7,8 @@ import { readVehicleFormData } from "../utils/addVehicleToDatabase";
 import type { VehicleDTO } from "../dto/VehicleDTO";
 import { createVehicleID } from "../utils/createVehicleID";
 import  { Car } from "../models/Car";
+import { addVehicleToRentModal, removeVehicleFromRentModal } from "../utils/addVehicleToRentalModal";
+import { remove } from "firebase/database";
 
 
 
@@ -37,9 +39,12 @@ export function addVehicleBlock(vechicle: Vehicle): void {
   const deleteBtn = block.querySelector(".delete-btn") as HTMLButtonElement;
   const editBtn = block.querySelector(".edit-btn") as HTMLButtonElement;
 
+  addVehicleToRentModal(vechicle.getId, vechicle.toString());
+
   deleteBtn.addEventListener("click", () => {
     FirebaseService.deleteVehicle(vechicle.getId).then(() => {
       block.remove()
+      removeVehicleFromRentModal(vechicle.getId);
     })
       .catch((err) => console.log("Помилка видалення:", err));
   });
@@ -71,6 +76,7 @@ export function addVehicleBlock(vechicle: Vehicle): void {
   
           await FirebaseService.setVehicle(updatedVehicle, vechicle.getId, newId);
           block.remove();
+          removeVehicleFromRentModal(vechicle.getId);
           addVehicleBlock(updatedVehicle);
   
           dialog.closeDialog();
@@ -80,6 +86,8 @@ export function addVehicleBlock(vechicle: Vehicle): void {
       }
     }
   });
+
+
 
   vehicleBlock.appendChild(block);
 }

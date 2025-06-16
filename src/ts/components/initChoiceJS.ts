@@ -1,19 +1,15 @@
 import Choices from "choices.js";
 
-/**
- * Объект для хранения всех ChoiceJS инстансов
- */
 const choicesInstances: Record<string, Choices> = {};
 
-/**
- * Инициализация всех select-елементів на сторінці з ChoiceJS
- */
+
 export function initChoices(): void {
   initSingleChoice("vechicle-type", false);
   initSingleChoice("carSelect", true);
   initSingleChoice("tzSelect", true);
   initSingleChoice("vechicle-type-edit", true);
   initSingleChoice("carSelectEdit", true);
+  initSingleChoice("editTzSelect", true);
 }
 
 /**
@@ -28,7 +24,6 @@ function initSingleChoice(selectId: string, searchEnabled: boolean): void {
     return;
   }
 
-  // Якщо інстанс уже існує, знищуємо перед повторною ініціалізацією
   if (choicesInstances[selectId]) {
     choicesInstances[selectId].destroy();
   }

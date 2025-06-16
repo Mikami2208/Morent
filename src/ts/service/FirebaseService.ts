@@ -4,23 +4,23 @@ import { Car } from "../models/Car";
 import { db } from "./firebase";
 import { collection, addDoc, getDocs, doc, setDoc, getDoc, query, where, limit, writeBatch, deleteDoc } from "firebase/firestore";
 import { Rental } from "../models/Rental";
-import type { VehicleDTO } from "../dto/VehicleDTO";
+import { VehicleDTO } from "../dto/VehicleDTO";
 import type { RentalDTO } from "../dto/RentalDTO";
 import { createCarID } from "../utils/createCarID";
 import { ModelFactory } from "../factories/ModelFactory"; // шлях змінюй відповідно
 
 
-export class FirebaseService{
+export class FirebaseService {
 
     public static async addCar(car: Car): Promise<void> {
-         try{
+        try {
             const carDocRef = doc(db, "cars", car.getId);
             await setDoc(carDocRef, car.toJSON());
 
-         } catch (error) {
+        } catch (error) {
             console.error("Помилка при додаванні авто:", error);
             throw new Error("Не вдалося додати авто до бази даних");
-         }
+        }
     }
 
     public static async addVehicle(vehicle: Vehicle): Promise<void> {
@@ -48,7 +48,7 @@ export class FirebaseService{
             await this.deleteCar(oldId)
             car.setId = newId; // Оновлюємо ID автомобіля на новий
             await this.addCar(car) // Оновлюємо ID на основі нових даних
-           
+
         } catch (error) {
             console.error("Помилка при оновленні авто:", error);
             throw new Error("Не вдалося оновити авто в базі даних");
@@ -58,7 +58,7 @@ export class FirebaseService{
     public static async setVehicle(vehicle: Vehicle, oldId: string, newId: string): Promise<void> {
         try {
             await this.deleteVehicle(oldId);
-            vehicle.setId = newId; 
+            vehicle.setId = newId;
             await this.addVehicle(vehicle);
         } catch (error) {
             console.error("Помилка при оновленні транспортного засобу:", error);
@@ -66,10 +66,11 @@ export class FirebaseService{
         }
     }
 
-    public static async setRental(rental: Rental, id: string): Promise<void> {
+    public static async setRental(rental: Rental, oldId: string, newId: string): Promise<void> {
         try {
-            const rentalDocRef = doc(db, "rentals", id);
-            await setDoc(rentalDocRef, rental.toJSON());
+            await this.deleteRental(oldId);
+            rental.setId = newId;
+            await this.addRental(rental);
         } catch (error) {
             console.error("Помилка при оновленні прокату:", error);
             throw new Error("Не вдалося оновити прокат в базі даних");
@@ -96,12 +97,7 @@ export class FirebaseService{
         try {
             const vehicleDocRef = doc(db, "vehicles", id);
             const vehicleDoc = await getDoc(vehicleDocRef);
-            if (vehicleDoc.exists()) {
-                return new Vehicle(vehicleDoc.data() as VehicleDTO);
-            } else {
-                console.warn("Транспортний засіб не знайдено");
-                return null;
-            }
+            return await ModelFactory.create("vehicles", vehicleDoc.data() as VehicleDTO) as Vehicle;
         } catch (error) {
             console.error("Помилка при отриманні транспортного засобу:", error);
             throw new Error("Не вдалося отримати транспортний засіб з бази даних");
@@ -142,22 +138,33 @@ export class FirebaseService{
             console.error("Помилка при видаленні транспортного засобу:", error);
             throw new Error("Не вдалося видалити транспортний засіб з бази даних");
         }
+
     }
 
-    
+    public static async deleteRental(rentalId: string): Promise<void> {
+        try {
+            const rentalDocRef = doc(db, "rentals", rentalId);
+            await deleteDoc(rentalDocRef);
+        } catch (error) {
+            console.error("Помилка при видаленні прокату:", error);
+            throw new Error("Не вдалося видалити прокат з бази даних");
+        }
+    }
+
+
 
     public static async getElementsByCollectionName(collectionName: string): Promise<any[]> {
         try {
             const collectionRef = collection(db, collectionName);
             const querySnapshot = await getDocs(collectionRef);
             const elements: any[] = [];
-    
+
             for (const doc of querySnapshot.docs) {
                 const rawData = { id: doc.id, ...doc.data() };
                 const instance = await ModelFactory.create(collectionName as any, rawData);
                 elements.push(instance);
             }
-    
+
             return elements;
         } catch (error) {
             console.error(`Помилка при отриманні елементів з колекції ${collectionName}:`, error);
