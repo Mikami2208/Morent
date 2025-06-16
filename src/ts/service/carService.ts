@@ -6,6 +6,7 @@ import { FirebaseService } from "../service/FirebaseService";
 import { readCarFormData } from "../utils/carUtils";
 import { addCarToVehicleModal, removeCarFromVehicleModal } from "../utils/carUtils";
 import { createCarID } from "../utils/carUtils";
+import { validateCarForm } from "../validation/carValidation";
 
 
 export function initCarCreation(): void {
@@ -26,8 +27,8 @@ export function initCarCreation(): void {
       const price = parseFloat(formData.get('price') as string);
       const year = parseInt(formData.get('year') as string, 10);
   
-      if (!brand || !model || isNaN(price) || isNaN(year)) {
-        console.warn("Будь ласка, заповніть усі поля коректно.");
+      
+      if(!validateCarForm(addCarForm)){
         return;
       }
   
@@ -91,6 +92,10 @@ export function renderCarBlock(car: Car): void {
         (document.getElementById("editModel") as HTMLInputElement).value = car.getModel;
         (document.getElementById("editYear") as HTMLInputElement).value = car.getYear.toString();
         (document.getElementById("editPrice") as HTMLInputElement).value = car.getPrice.toString();
+
+        if(!validateCarForm(form)){
+          return;
+        }
 
         form.onsubmit = async (event) => {
             event.preventDefault();

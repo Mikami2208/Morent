@@ -5,6 +5,7 @@ import { Rental } from "../models/Rental";
 import { Vehicle } from "../models/Vehicle";
 import { VehicleDTO } from "../dto/VehicleDTO";
 import { DialogManager } from "../managers/DialogManager";
+import { validateRentalForm } from "../validation/rentalValidation";
 
 export function initRentalCreation(): void {
     const rentalForm = document.querySelector("#addRentDialog form") as HTMLFormElement;
@@ -20,32 +21,33 @@ export function initRentalCreation(): void {
         const companyName = formData.get("companyName")?.toString().trim();
         const vehicleId = formData.get("tz-select")?.toString().trim();
 
-        if (!companyName || !vehicleId) {
-            console.warn("Заповніть усі поля форми прокату.");
-            return;
-        }
-
+    
+      if(!validateRentalForm(rentalForm)){
+        return;
+      }
         let vehicle: Vehicle | null = null;
+
         try {
-            vehicle = await FirebaseService.getVehicleById(vehicleId) as Vehicle;
-            if (!vehicle) {
-                console.error("Транспортний засіб не знайдено за ID:", vehicleId);
-                return;
-            }
-        } catch (error) {
-            console.error("Помилка при отриманні транспорту:", error);
+          vehicle = await FirebaseService.getVehicleById(vehicleId || "") as Vehicle;
+          if (!vehicle) {
+            console.error("Транспортний засіб не знайдено за ID:", vehicleId);
             return;
+          }
+        } catch (error) {
+          console.error("Помилка при отриманні транспорту:", error);
+          return;
         }
 
         const vehicleDto = new VehicleDTO(vehicle.getCar, vehicle.getCategory, vehicle.getPlateNumber, vehicle.getStartDate, vehicle.getRentalDuration, vehicle.getPrice);
-        const rentalDto = new RentalDTO(companyName, [vehicleDto]);
+
+        const rentalDto = new RentalDTO(companyName as string, [vehicleDto]);
         let rental: Rental;
 
         try {
-            rental = new Rental(rentalDto);
+          rental = new Rental(rentalDto);
         } catch (error) {
-            console.error("Помилка створення об'єкта Rental:", error);
-            return;
+          console.error("Помилка створення об'єкта Rental:", error);
+          return;
         }
 
         try {
@@ -101,16 +103,18 @@ export function renderRentalBlock(rental: Rental): void {
     const form = dialog.dialog.querySelector("form") as HTMLFormElement;
     const nameInput = form.querySelector("#editCompanyName") as HTMLInputElement;
     const select = form.querySelector("select") as HTMLSelectElement;
-    console.log(rental.getCompanyName)
     nameInput.value = rental.getCompanyName;
     select.value = rental.getVehicle()[0]?.getId || "";
+
 
     form.onsubmit = async (event) => {
       event.preventDefault();
       const companyName = nameInput.value.trim();
       const vehicleId = select.value;
+      if(!validateRentalForm(form)){
+        return;
+      }
 
-      if (!companyName || !vehicleId) return;
 
       try {
         const vehicle = await FirebaseService.getVehicleById(vehicleId);
