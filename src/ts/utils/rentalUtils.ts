@@ -1,3 +1,6 @@
+import { Rental } from "../models/Rental";
+import { FirebaseService } from "../service/FirebaseService";
+import { renderRentalBlock } from "../service/rentalService";
 
 
 
@@ -16,4 +19,12 @@ export function createRentalID(companyName: string): string {
         currentDate.getSeconds().toString().padStart(2, '0')
     ].join('')
     return `${companyName}-${timestamp}`;
+}
+
+export async function addAllRentalsToPageFromDB(): Promise<void>{
+    const rentals: Rental[] = await FirebaseService.getElementsByCollectionName("rentals") as Rental[];
+    rentals.forEach((rental: Rental) => {
+        renderRentalBlock(rental);
+    })
+
 }

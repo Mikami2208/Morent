@@ -4,8 +4,9 @@ import { addChoicesOption, getChoicesInstance } from "../components/initChoiceJS
 import { Category } from "../models/Category";
 import type { Car } from "../models/Car";
 import { VehicleDTO } from "../dto/VehicleDTO";
+import { renderVehicleBlock } from "../service/vehicleService";
 
-export async function addVehiclesToRentalModalFromDB(): Promise<void> {
+export async function addAllVehiclesToPageFromDB(): Promise<void> {
   try {
     const vehicles: Vehicle[] = await FirebaseService.getElementsByCollectionName("vehicles") as Vehicle[];
 
@@ -17,8 +18,7 @@ export async function addVehiclesToRentalModalFromDB(): Promise<void> {
     console.log("Транспортні засоби з бази даних:", vehicles);
 
     vehicles.forEach(vehicle => {
-      addChoicesOption("tzSelect", vehicle.getId, vehicle.toString());
-      addChoicesOption("editTzSelect", vehicle.getId, vehicle.toString());
+      renderVehicleBlock(vehicle);
     });
 
   } catch (error) {

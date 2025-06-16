@@ -1,4 +1,4 @@
-import type { CarDTO } from "../dto/CarDTO";
+import { CarDTO } from "../dto/CarDTO";
 import { Vehicle } from "../models/Vehicle";
 import { Car } from "../models/Car";
 import { db } from "./firebase";
@@ -96,6 +96,7 @@ export class FirebaseService {
         try {
             const vehicleDocRef = doc(db, "vehicles", id);
             const vehicleDoc = await getDoc(vehicleDocRef);
+            console.log(vehicleDoc.data())
             return await ModelFactory.create("vehicles", vehicleDoc.data() as VehicleDTO) as Vehicle;
         } catch (error) {
             console.error("Помилка при отриманні транспортного засобу:", error);
@@ -153,21 +154,43 @@ export class FirebaseService {
 
 
     public static async getElementsByCollectionName(collectionName: string): Promise<any[]> {
-        try {
-            const collectionRef = collection(db, collectionName);
-            const querySnapshot = await getDocs(collectionRef);
-            const elements: any[] = [];
+            try {
+                    const collectionRef = collection(db, collectionName);
+                    const querySnapshot = await getDocs(collectionRef);
+                    const elements: any[] = [];
 
-            for (const doc of querySnapshot.docs) {
-                const rawData = { id: doc.id, ...doc.data() };
-                const instance = await ModelFactory.create(collectionName as any, rawData);
-                elements.push(instance);
+                    for (const doc of querySnapshot.docs) {
+                            const rawData = { id: doc.id, ...doc.data() };
+                            const instance = await ModelFactory.create(collectionName as any, rawData);
+                            elements.push(instance);
+                    }
+
+                    return elements;
+            } catch (error) {
+                    console.error(`Помилка при отриманні елементів з колекції ${collectionName}:`, error);
+                    throw new Error(`Не вдалося отримати елементи з колекції ${collectionName}`);
             }
-
-            return elements;
-        } catch (error) {
-            console.error(`Помилка при отриманні елементів з колекції ${collectionName}:`, error);
-            throw new Error(`Не вдалося отримати елементи з колекції ${collectionName}`);
-        }
     }
+
 }
+
+export async function fetchAllData(): Promise<{
+    cars: Car[];
+    vehicles: Vehicle[];
+    rentals: Rental[];
+  }> {
+    try {
+      const [cars, vehicles, rentals] = await Promise.all([
+        FirebaseService.getElementsByCollectionName("cars") as Promise<Car[]>,
+        FirebaseService.getElementsByCollectionName("vehicles") as Promise<Vehicle[]>,
+        FirebaseService.getElementsByCollectionName("rentals") as Promise<Rental[]>,
+      ]);
+  
+      return { cars, vehicles, rentals };
+  
+    } catch (error) {
+      console.error("Помилка при завантаженні всіх даних:", error);
+      return { cars: [], vehicles: [], rentals: [] };
+    }
+  }
+  

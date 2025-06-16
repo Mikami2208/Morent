@@ -3,9 +3,10 @@ import { FirebaseService } from "../service/FirebaseService";
 import { addChoicesOption } from "../components/initChoiceJS";
 import { CarDTO } from "../dto/CarDTO";
 import { getChoicesInstance } from "../components/initChoiceJS";
+import { renderCarBlock } from "../service/carService";
 
 
-export async function addCarsToVehicleModalFromDB(): Promise<void> {
+export async function addAllCarsToPageFromDB(): Promise<void> {
   try {
     const cars: Car[] = await FirebaseService.getElementsByCollectionName("cars") as Car[];
 
@@ -17,8 +18,7 @@ export async function addCarsToVehicleModalFromDB(): Promise<void> {
     console.log("Автомобілі з бази даних:", cars);
 
     cars.forEach(car => {
-      addChoicesOption("carSelect", car.getId, car.toString());
-      addChoicesOption("carSelectEdit", car.getId, car.toString());
+      renderCarBlock(car)
     });
 
   } catch (error) {

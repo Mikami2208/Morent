@@ -16,8 +16,9 @@ export class Rental{
         }
         this.id = createRentalID(dto.companyName);
         this.companyName = dto.companyName;
-        this.vehicle = dto.vehicle.map(v => new Vehicle(v));
+        this.vehicle = dto.vehicle.map(v => v);
     }
+
 
     get getId(): string {
         return this.id;

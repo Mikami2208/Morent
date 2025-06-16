@@ -38,9 +38,7 @@ export function initRentalCreation(): void {
           return;
         }
 
-        const vehicleDto = new VehicleDTO(vehicle.getCar, vehicle.getCategory, vehicle.getPlateNumber, vehicle.getStartDate, vehicle.getRentalDuration, vehicle.getPrice);
-
-        const rentalDto = new RentalDTO(companyName as string, [vehicleDto]);
+        const rentalDto = new RentalDTO(companyName as string, [vehicle]);
         let rental: Rental;
 
         try {
@@ -120,7 +118,7 @@ export function renderRentalBlock(rental: Rental): void {
         const vehicle = await FirebaseService.getVehicleById(vehicleId);
         const dto: RentalDTO = {
           companyName,
-          vehicle: [vehicle as unknown as VehicleDTO]
+          vehicle: [vehicle as unknown as Vehicle]
         };
 
         const newRental = new Rental(dto);

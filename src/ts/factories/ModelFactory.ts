@@ -38,6 +38,17 @@ export class ModelFactory {
                 return vehicle;
 
             case "rentals":
+                console.log(data.vehicle);
+                const vehicleForRental: Vehicle = await FirebaseService.getVehicleById(data.vehicle[0]) as Vehicle;
+                vehicleForRental.setId = data.vehicle[0]; 
+
+                const rentalDTO = new RentalDTO(
+                    data.companyName,
+                    [vehicleForRental],
+                );
+                const rental = new Rental(rentalDTO);
+                rental.setId = data.id;
+                return rental;
 
             default:
                 throw new Error(`Unsupported collection type: ${collectionName}`);

@@ -2,15 +2,30 @@ import '../scss/styles.scss'
 import { initChoices } from './components/initChoiceJS';
 import { closeModal, openModal } from './handlers/modalWindowHandler';
 import { DialogManager } from './managers/DialogManager'
-import { FirebaseService } from './service/FirebaseService';
-import { initVehicleCreation } from './service/vehicleService';
-import { initCarCreation } from './service/carService';
-import { addCarsToVehicleModalFromDB } from './utils/carUtils';
-import { initRentalCreation } from './service/rentalService';
-import { addVehiclesToRentalModalFromDB } from './utils/vehicleUtils';
+import { FirebaseService, fetchAllData } from './service/FirebaseService';
+import { initVehicleCreation, renderVehicleBlock } from './service/vehicleService';
+import { initCarCreation, renderCarBlock } from './service/carService';
+import { addAllCarsToPageFromDB } from './utils/carUtils';
+import { initRentalCreation, renderRentalBlock } from './service/rentalService';
+import { addAllVehiclesToPageFromDB } from './utils/vehicleUtils';
 import { populateCategorySelect } from './utils/populateCategorySelect';
 import { addCloseConfirmation } from './utils/addCloseConfirmation';
-
+import { addAllRentalsToPageFromDB } from './utils/rentalUtils';
+/*window.addEventListener("DOMContentLoaded", async () => {
+    const { cars, vehicles, rentals } = await fetchAllData();
+  
+    // Тепер можеш використовувати ці дані:
+    cars.forEach(car => {
+        renderCarBlock(car);
+    })
+    vehicles.forEach(vehicle => {
+        renderVehicleBlock(vehicle);
+    });
+    rentals.forEach(rental => {
+       renderRentalBlock(rental);
+    });
+  });*/
+  
 (async function initApp() {
     populateCategorySelect();
     initChoices();
@@ -24,8 +39,9 @@ import { addCloseConfirmation } from './utils/addCloseConfirmation';
     addCloseConfirmation('editVehicleDialog');
     addCloseConfirmation('editRentDialog');
 
-    await addCarsToVehicleModalFromDB();
-    await addVehiclesToRentalModalFromDB();
+    await addAllCarsToPageFromDB();
+    await addAllVehiclesToPageFromDB();
+    await addAllRentalsToPageFromDB();
 
 
 })();
