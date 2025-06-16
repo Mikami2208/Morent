@@ -1,14 +1,55 @@
+
 import { CarDTO } from "../dto/CarDTO";
 import { DialogManager } from "../managers/DialogManager";
 import { Car } from "../models/Car";
 import { FirebaseService } from "../service/FirebaseService";
-import { readCarFormData } from "../utils/addCarToDatabase";
-import { addCarToVehicleModal, removeCarFromVehicleModal } from "../utils/addCarToVehicleModal";
-import { createCarID } from "../utils/createCarID";
-import { initChoices } from "./initChoiceJS";
+import { readCarFormData } from "../utils/carUtils";
+import { addCarToVehicleModal, removeCarFromVehicleModal } from "../utils/carUtils";
+import { createCarID } from "../utils/carUtils";
 
 
-export function addCarBlock(car: Car): void {
+export function initCarCreation(): void {
+    const addCarForm = document.getElementById('addCarForm') as HTMLFormElement;
+    const dialog = document.getElementById('addCarDialog') as HTMLDialogElement;
+  
+    if (!addCarForm || !dialog) {
+      console.error('Форма або діалог не знайдені.');
+      return;
+    }
+  
+    addCarForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+  
+      const formData = new FormData(addCarForm);
+      const brand = formData.get('brand')?.toString().trim() || "";
+      const model = formData.get('model')?.toString().trim() || "";
+      const price = parseFloat(formData.get('price') as string);
+      const year = parseInt(formData.get('year') as string, 10);
+  
+      if (!brand || !model || isNaN(price) || isNaN(year)) {
+        console.warn("Будь ласка, заповніть усі поля коректно.");
+        return;
+      }
+  
+      const newCarDTO: CarDTO = new CarDTO(brand, model, price, year);
+      const newCar: Car = new Car(newCarDTO);
+  
+      try {
+        await FirebaseService.addCar(newCar);
+        console.log("Автомобіль успішно додано:", newCar);
+        renderCarBlock(newCar); // Додаємо блок на сторінку
+        addCarForm.reset();
+        dialog.close(); // Закриваємо діалог після додавання
+      } catch (error) {
+        console.error("Помилка при додаванні автомобіля:", error);
+      }
+    });
+  }
+  
+  
+
+
+export function renderCarBlock(car: Car): void {
     const carsList = document.querySelector(".cars__cars-list") as HTMLDivElement;
     if (!carsList) return;
 
@@ -77,7 +118,7 @@ export function addCarBlock(car: Car): void {
           
               block.remove();
               removeCarFromVehicleModal(car.getId);
-              addCarBlock(updatedCar); 
+              renderCarBlock(updatedCar); 
           
               dialog.closeDialog();
             } catch (err) {

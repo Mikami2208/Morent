@@ -1,5 +1,7 @@
 
 
+
+
 export function createRentalID(companyName: string): string {
     if (!companyName || typeof companyName !== 'string') {
         throw new Error("Invalid company name");

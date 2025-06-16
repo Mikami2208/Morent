@@ -3,19 +3,19 @@ import { initChoices } from './components/initChoiceJS';
 import { openModal } from './handlers/modalWindowHandler';
 import { DialogManager } from './managers/DialogManager'
 import { FirebaseService } from './service/FirebaseService';
-import { addCarToDatabase } from './utils/addCarToDatabase';
-import { addCarsToVehicleModalFromDB } from './utils/addCarsToVehicleModal';
-import { addRentalToDatabase } from './utils/addRentalToDB';
-import { addVehicleToDatabase } from './utils/addVehicleToDatabase';
-import { addVehiclesToRentalModalFromDB } from './utils/addVehiclesToRentalModalFromDB';
+import { initVehicleCreation } from './service/vehicleService';
+import { initCarCreation } from './service/carService';
+import { addCarsToVehicleModalFromDB } from './utils/carUtils';
+import { initRentalCreation } from './service/rentalService';
+import { addVehiclesToRentalModalFromDB } from './utils/vehicleUtils';
 import { populateCategorySelect } from './utils/populateCategorySelect';
 
 (async function initApp() {
     populateCategorySelect();
     initChoices();  
-    addCarToDatabase();
-    addVehicleToDatabase();
-    addRentalToDatabase();
+    initCarCreation();
+    initVehicleCreation();
+    initRentalCreation();
   
     await addCarsToVehicleModalFromDB();
     await addVehiclesToRentalModalFromDB();

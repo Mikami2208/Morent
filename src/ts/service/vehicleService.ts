@@ -1,18 +1,70 @@
-import firebase from "firebase/compat/app";
+
 import { Vehicle } from "../models/Vehicle";
 import { FirebaseService } from "../service/FirebaseService";
 import { DialogManager } from "../managers/DialogManager";
+import { readVehicleFormData } from "../utils/vehicleUtils";
+import { VehicleDTO } from "../dto/VehicleDTO";
+import { createVehicleID } from "../utils/vehicleUtils";
+import { addVehicleToRentModal, removeVehicleFromRentModal } from "../utils/vehicleUtils";
 import type { Category } from "../models/Category";
-import { readVehicleFormData } from "../utils/addVehicleToDatabase";
-import type { VehicleDTO } from "../dto/VehicleDTO";
-import { createVehicleID } from "../utils/createVehicleID";
-import  { Car } from "../models/Car";
-import { addVehicleToRentModal, removeVehicleFromRentModal } from "../utils/addVehicleToRentalModal";
-import { remove } from "firebase/database";
+import type { Car } from "../models/Car";
 
+export function initVehicleCreation(): void {
+    const addVehicleForm = document.getElementById("addVehicleForm") as HTMLFormElement;
+    if (!addVehicleForm) {
+        console.error("Форма не знайдена");
+        return;
+    }
+    addVehicleForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
+        const formData = new FormData(addVehicleForm);
+        const type: Category = formData.get("vechicle-type") as Category;
+        const plateNumber: string = formData.get("plate-number")?.toString().trim() || "";
+        const dateOfStartRental: Date = new Date(formData.get("date-of-start-rental") as string);
+        const rentalDuration: number = parseInt(formData.get("rental-duration") as string, 10);
+        const price: number = parseFloat(formData.get("price-rental") as string);
+    
+        const selectedCarId = (formData.get("car") as string)?.trim();
+        if (!selectedCarId) {
+            console.warn("ID автомобіля не вибрано.");
+            return;
+        }
+    
+        let carDb: Car | null = null;
+        try {
+            carDb = await FirebaseService.getCarById(selectedCarId) as Car;
+            carDb.setId = selectedCarId; 
+            if (!carDb) {
+                console.warn("Автомобіль не знайдено за ID:", selectedCarId);
+                return;
+            }
+        } catch (error) {
+            console.error("Помилка при завантаженні автомобіля:", error);
+            return;
+        }
+    
+        if (!type || !carDb || !plateNumber || isNaN(rentalDuration) || !dateOfStartRental || isNaN(price)) {
+            console.warn("Будь ласка, заповніть усі поля коректно.");
+            return;
+        }
+    
+        const newVehicleDto: VehicleDTO = new VehicleDTO(carDb, type, plateNumber, dateOfStartRental, rentalDuration, price);
+        const newVehicle: Vehicle = new Vehicle(newVehicleDto);
+    
+        try {
+            await FirebaseService.addVehicle(newVehicle);
+            console.log("Транспортний засіб успішно додано:", newVehicle);
+            renderVehicleBlock(newVehicle);
+            addVehicleForm.reset();
+            
+        } catch (error) {
+            console.error("Помилка при додаванні транспортного засобу:", error);
+        }
+    });
+}
 
-export function addVehicleBlock(vechicle: Vehicle): void {
+export function renderVehicleBlock(vechicle: Vehicle): void {
   const vehicleBlock = document.getElementById('tzList') as HTMLDivElement;
   console.log("Додаємо блок для транспортного засобу:", vehicleBlock);
 
@@ -77,7 +129,7 @@ export function addVehicleBlock(vechicle: Vehicle): void {
           await FirebaseService.setVehicle(updatedVehicle, vechicle.getId, newId);
           block.remove();
           removeVehicleFromRentModal(vechicle.getId);
-          addVehicleBlock(updatedVehicle);
+          renderVehicleBlock(updatedVehicle);
   
           dialog.closeDialog();
         } catch (error) {

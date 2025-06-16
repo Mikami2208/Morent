@@ -6,7 +6,6 @@ import { collection, addDoc, getDocs, doc, setDoc, getDoc, query, where, limit, 
 import { Rental } from "../models/Rental";
 import { VehicleDTO } from "../dto/VehicleDTO";
 import type { RentalDTO } from "../dto/RentalDTO";
-import { createCarID } from "../utils/createCarID";
 import { ModelFactory } from "../factories/ModelFactory"; // шлях змінюй відповідно
 
 

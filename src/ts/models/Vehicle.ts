@@ -1,5 +1,5 @@
 import { VehicleDTO } from "../dto/VehicleDTO";
-import { createVehicleID } from "../utils/createVehicleID";
+import { createVehicleID } from "../utils/vehicleUtils"
 import { Car } from "./Car";
 import { Category } from "./Category";
 

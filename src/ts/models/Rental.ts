@@ -1,5 +1,5 @@
 import { RentalDTO } from "../dto/RentalDTO";
-import { createRentalID } from "../utils/createRentalID";
+import { createRentalID } from "../utils/rentalUtils";
 import { Vehicle } from "./Vehicle";
 
 
