@@ -97,7 +97,7 @@ export function renderVehicleBlock(vechicle: Vehicle): void {
   const editBtn = block.querySelector(".edit-btn") as HTMLButtonElement;
 
   addVehicleToRentModal(vechicle.getId, vechicle.toString());
-
+  console.log(vechicle.getId)
   deleteBtn.addEventListener("click", () => {
     FirebaseService.deleteVehicle(vechicle.getId).then(() => {
       block.remove()

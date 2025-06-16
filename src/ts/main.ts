@@ -1,6 +1,6 @@
 import '../scss/styles.scss'
 import { initChoices } from './components/initChoiceJS';
-import { openModal } from './handlers/modalWindowHandler';
+import { closeModal, openModal } from './handlers/modalWindowHandler';
 import { DialogManager } from './managers/DialogManager'
 import { FirebaseService } from './service/FirebaseService';
 import { initVehicleCreation } from './service/vehicleService';
@@ -12,19 +12,19 @@ import { populateCategorySelect } from './utils/populateCategorySelect';
 
 (async function initApp() {
     populateCategorySelect();
-    initChoices();  
+    initChoices();
     initCarCreation();
     initVehicleCreation();
     initRentalCreation();
-  
+
     await addCarsToVehicleModalFromDB();
     await addVehiclesToRentalModalFromDB();
-  })();
+})();
 
- 
+
 document.getElementById('addCarButton')?.addEventListener('click', () => {
     openModal('addCarDialog');
-    
+
 });
 
 document.getElementById('addVehicleButton')?.addEventListener('click', () => {
@@ -32,8 +32,9 @@ document.getElementById('addVehicleButton')?.addEventListener('click', () => {
 });
 
 document.getElementById('addRentButton')?.addEventListener('click', () => {
-   openModal('addRentDialog');
+    openModal('addRentDialog');
 });
+
 
 
 

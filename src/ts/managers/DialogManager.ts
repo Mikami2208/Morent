@@ -18,12 +18,11 @@ export class DialogManager{
     }
 
     public openDialog(): void {
-        document.body.classList.toggle("_locked");
+
         this.dialog.showModal();
     }
 
     public closeDialog(): void {
-        document.body.classList.toggle("_locked");
         this.dialog.close();
     }
 }
